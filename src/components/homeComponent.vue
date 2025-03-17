@@ -1,7 +1,9 @@
 <template>
-    <section>
+    <section id="inicio">
         <img src="../assets/img/letras-capa-ultima-passageira.png" alt="A Última Passageira">
-        <button class="btn">Ver mais</button>
+        <a href="#sobre" class="btn">
+            Ver mais
+        </a>
     </section>
 </template>
 <script>
@@ -9,3 +11,12 @@ export default {
     name: "homeComponent"
 }
 </script>
+<style scoped>
+section {
+    padding-top: 56px;
+}
+img {
+    width: 100%;
+    max-width: 500px;
+}
+</style>
