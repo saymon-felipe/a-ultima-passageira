@@ -50,8 +50,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    flex-wrap: wrap;
-    gap: var(--space-5);
+    gap: var(--space-8);
+    padding: 0 var(--space-5);
+    overflow-x: auto;
     width: 100%;
 }
 </style>

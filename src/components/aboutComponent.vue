@@ -37,4 +37,18 @@ export default {
         font-size: 8rem;
     }
 }
+
+@media (max-width: 768px) {
+    .left h1 {
+        font-size: 5rem;
+    }
+
+    .left h1 br {
+        display: none;
+    }
+
+    .right {
+        text-align: center;
+    }
+}
 </style>

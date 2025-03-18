@@ -42,4 +42,24 @@ export default {
     display: grid;
     gap: var(--space-8);
 }
+
+@media (max-width: 768px) {
+    .buy {
+        grid-template-columns: 1fr;
+        text-align: center;
+
+        & img {
+            height: 200px;
+            width: initial;
+        }
+    }
+
+    .book-footer p {
+        font-size: 15px;
+    }
+
+    a {
+        margin: auto;
+    }
+}
 </style>

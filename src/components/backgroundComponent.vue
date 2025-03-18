@@ -13,7 +13,7 @@ export default {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    width: 100vw;
+    width: calc(100vw - 20px);
     height: 100vh;
     position: fixed;
     top: 0;

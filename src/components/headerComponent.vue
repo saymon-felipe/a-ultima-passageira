@@ -53,9 +53,11 @@ header {
         margin: 0;
         display: flex;
         align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--space-5);
 
         & li {
-            margin: 0 var(--space-5);
             cursor: pointer;
             transition: color 0.4s ease-in-out;
             color: var(--white);

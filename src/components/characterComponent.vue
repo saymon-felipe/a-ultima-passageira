@@ -23,6 +23,8 @@ export default {
     align-items: center;
     gap: var(--space-5);
     width: 248px;
+    min-width: 248px;
+    max-width: 248px;
     min-height: 608px;
     text-align: center;
 

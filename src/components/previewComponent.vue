@@ -13,16 +13,37 @@ export default {
 }
 </script>
 <style>
+.pdf-vue3-scroller {
+    display: grid;
+    place-items: center;
+}
+
 .pdf-vue3-canvas-container {
     margin: 0px auto;
     width: 100%;
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    height: 100%;
+    height: fit-content;
+    scroll-snap-type: x mandatory;
 
     & canvas {
-        height: calc(100vh - 200px) !important;
+        scroll-snap-align: start;
+        width: 50% !important;
+        min-width: 50% !important;
+        max-width: 50% !important;
+        aspect-ratio: 9/16 !important;
+        height: initial !important;
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 768px) {
+    .pdf-vue3-canvas-container canvas {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
     }
 }
 </style>

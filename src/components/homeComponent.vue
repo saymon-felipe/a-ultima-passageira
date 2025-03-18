@@ -12,11 +12,8 @@ export default {
 }
 </script>
 <style scoped>
-section {
-    padding-top: 56px;
-}
 img {
-    width: 100%;
+    width: calc(100% - 4rem);
     max-width: 500px;
 }
 </style>

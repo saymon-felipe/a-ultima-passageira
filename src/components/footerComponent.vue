@@ -22,4 +22,10 @@ footer {
     padding: 6rem;
     gap: 6rem;
 }
+
+@media (max-width: 768px) {
+    .author p {
+        margin-bottom: var(--space-5);
+    }
+}
 </style>

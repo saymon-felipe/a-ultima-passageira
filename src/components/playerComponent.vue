@@ -84,35 +84,54 @@ export default {
         },
         makeControlDraggable: function (element) {
             let offsetX, offsetY, isDragging = false;
-        
-            element.style.position = "fixed"; // Garante que pode ser movido
-            document.getElementById("grip").style.cursor = "grab";
-        
-            document.addEventListener("mousedown", (event) => {
-                const grabControl = event.target.closest("#grip");
-                if (grabControl) {
-                    isDragging = true;
-                    offsetX = event.clientX - element.getBoundingClientRect().left;
-                    offsetY = event.clientY - element.getBoundingClientRect().top;
-                    grabControl.style.cursor = "grabbing";
-                }
-            });
-        
-            document.addEventListener("mousemove", (event) => {
-                if (isDragging) {
-                    element.style.left = event.clientX - offsetX + "px";
-                    element.style.top = event.clientY - offsetY + "px";
-                }
-            });
-        
-            document.addEventListener("mouseup", () => {
-                isDragging = false;
 
-                if (document.getElementById("grip")) {
-                    document.getElementById("grip").style.cursor = "grab";
+            element.style.position = "fixed"; // Garante que pode ser movido
+            const grip = document.getElementById("grip");
+
+            if (grip) {
+                grip.style.cursor = "grab";
+
+                // Início do arrasto (Mouse e Toque)
+                function startDrag(event) {
+                    const e = event.touches ? event.touches[0] : event; // Suporte a toque
+                    const grabControl = e.target.closest("#grip");
+
+                    if (grabControl) {
+                        isDragging = true;
+                        offsetX = e.clientX - element.getBoundingClientRect().left;
+                        offsetY = e.clientY - element.getBoundingClientRect().top;
+                        grip.style.cursor = "grabbing";
+                        event.preventDefault(); // Evita rolagem no mobile
+                    }
                 }
-            });
-        } 
+
+                // Movimento do elemento
+                function moveDrag(event) {
+                    if (isDragging) {
+                        const e = event.touches ? event.touches[0] : event;
+                        element.style.left = e.clientX - offsetX + "px";
+                        element.style.top = e.clientY - offsetY + "px";
+                    }
+                }
+
+                // Fim do arrasto
+                function stopDrag() {
+                    isDragging = false;
+                    grip.style.cursor = "grab";
+                }
+
+                // Eventos de Mouse
+                grip.addEventListener("mousedown", startDrag);
+                document.addEventListener("mousemove", moveDrag);
+                document.addEventListener("mouseup", stopDrag);
+
+                // Eventos de Toque (Mobile)
+                grip.addEventListener("touchstart", startDrag, { passive: false });
+                document.addEventListener("touchmove", moveDrag, { passive: false });
+                document.addEventListener("touchend", stopDrag);
+            }
+        }
+
     },
     mounted: function () {
         this.makeControlDraggable(document.querySelector(".player"));
@@ -124,7 +143,7 @@ export default {
     position: fixed;
     top: 5rem;
     left: var(--space-10);
-    z-index: 4;
+    z-index: 9999;
     background: var(--background-black-opacity);
     padding: var(--space-5);
     height: fit-content;
@@ -198,6 +217,19 @@ export default {
 
         &:hover {
             color: var(--blue);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .player-current {
+        & img {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            min-height: 50px;
+            max-width: 50px;
+            max-height: 50px;
         }
     }
 }
