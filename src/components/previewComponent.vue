@@ -80,7 +80,6 @@ export default {
 <style>
 .responsive-buttons {
     display: none;
-    display: flex;
     align-items: center;
     gap: var(--space-5);
 }
