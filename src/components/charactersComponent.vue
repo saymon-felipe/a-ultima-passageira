@@ -54,5 +54,6 @@ export default {
     padding: 0 var(--space-5);
     overflow-x: auto;
     width: 100%;
+    padding: 10px 0;
 }
 </style>
