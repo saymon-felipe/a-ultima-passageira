@@ -37,5 +37,24 @@
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const fullTitle = document.title;
+        const splitIndex = Math.ceil(fullTitle.length / 2); // Divide o texto ao meio
+        const firstHalf = fullTitle.substring(0, splitIndex).trim();
+        const secondHalf = fullTitle.substring(splitIndex).trim();
+        
+        let showFirst = true;
+
+        function toggleTitle() {
+            document.title = showFirst ? `${firstHalf.replace(/-/g, "")}` : `${secondHalf}`;
+            showFirst = !showFirst;
+            setTimeout(toggleTitle, 7000); // Alterna a cada 3 segundos
+        }
+
+        toggleTitle();
+      });
+    </script>
   </body>
 </html>
