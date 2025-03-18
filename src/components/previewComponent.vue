@@ -33,6 +33,12 @@ export default {
     },
     methods: {
         prevSlide: function () {
+            let self = this;
+            
+            if (self.paginating) return;
+
+            self.paginating = true;
+
             const canvaWidth = document.querySelector(".pdf-vue3-canvas-container canvas").offsetWidth;
             const scroller = document.querySelector(".pdf-vue3-canvas-container");
 
@@ -42,9 +48,17 @@ export default {
                 this.saveCurrentPage();
             }
 
-            scroller.scrollTo({ left: scroller.scrollLeft - canvaWidth, behavior: "smooth" });
+            $("#scroller").animate({ scrollLeft: $("#scroller").scrollLeft() - canvaWidth }, 500).promise().then(() => {
+                self.paginating = false;
+            });
         },
         nextSlide: function () {
+            let self = this;
+            
+            if (self.paginating) return;
+
+            self.paginating = true;
+            
             const canvaWidth = document.querySelector(".pdf-vue3-canvas-container canvas").offsetWidth;
             const scroller = document.querySelector(".pdf-vue3-canvas-container");
             
@@ -54,7 +68,9 @@ export default {
                 this.saveCurrentPage();
             }
 
-            scroller.scrollTo({ left: scroller.scrollLeft + canvaWidth, behavior: "smooth" });
+            $("#scroller").animate({ scrollLeft: $("#scroller").scrollLeft() + canvaWidth }, 500).promise().then(() => {
+                self.paginating = false;
+            });
         },
         saveCurrentPage: function () {
             let steps = this.next - this.prev;
