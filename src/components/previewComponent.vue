@@ -26,9 +26,8 @@ export default {
     },
     data() {
         return {
-            prev: 0,
-            next: 0,
-            paginating: false
+            paginating: false,
+            scrollTarget: 0
         }
     },
     methods: {
@@ -42,10 +41,8 @@ export default {
             const scroller = $(".pdf-vue3-canvas-container");
 
             if (scroller.scrollLeft() > 0) {
-                this.prev++;
-
-                this.saveCurrentPage(this.getScroll());
-            }
+                this.saveCurrentPage(this.setScroll("prev"));
+            } 
 
             scroller.stop().animate({ scrollLeft: self.getScroll() }, 500, () => {
                 self.paginating = false;
@@ -61,20 +58,28 @@ export default {
             const scroller = $(".pdf-vue3-canvas-container");
             
             if (scroller.scrollLeft() + scroller.outerWidth() < scroller[0].scrollWidth) {
-                this.next++;
-
-                this.saveCurrentPage(this.getScroll());
+                this.saveCurrentPage(this.setScroll("next"));
             }
 
             scroller.stop().animate({ scrollLeft: self.getScroll() }, 500, () => {
                 self.paginating = false;
             })
         },
-        getScroll: function () {
-            let steps = this.next - this.prev;
-            let scrollTarget = steps * (document.querySelector(".pdf-vue3-canvas-container canvas").offsetWidth);
+        setScroll: function (direction) {
+            let scrollTarget;
 
-            return scrollTarget;
+            if (direction == "next") {
+                scrollTarget = (document.querySelector(".pdf-vue3-canvas-container canvas").offsetWidth);
+            } else {
+                scrollTarget = -(document.querySelector(".pdf-vue3-canvas-container canvas").offsetWidth);
+            }
+
+            this.scrollTarget += scrollTarget;
+
+            return this.scrollTarget;
+        },
+        getScroll: function () {
+            return this.scrollTarget;
         },
         saveCurrentPage: function (scrollTarget) {
             localStorage.setItem("currentScroll", scrollTarget);
@@ -90,6 +95,9 @@ export default {
             }
         }, 1000)
         
+        if (localStorage.getItem("currentScroll")) {
+            this.scrollTarget = parseInt(localStorage.getItem("currentScroll"));
+        }
     }
 }
 </script>
@@ -144,11 +152,9 @@ export default {
     display: flex;
     overflow: hidden;
     height: fit-content;
-    scroll-snap-type: x mandatory;
     height: 100%;
 
     & canvas {
-        scroll-snap-align: start;
         width: 50% !important;
         min-width: 50% !important;
         max-width: 50% !important;
