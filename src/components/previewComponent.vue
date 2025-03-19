@@ -19,7 +19,6 @@
 </template>
 <script>
 import PDF from "pdf-vue3";
-import $ from 'jquery';
 
 export default {
     components: {
@@ -28,7 +27,8 @@ export default {
     data() {
         return {
             prev: 0,
-            next: 0
+            next: 0,
+            paginating: false
         }
     },
     methods: {
@@ -39,18 +39,17 @@ export default {
 
             self.paginating = true;
 
-            const canvaWidth = document.querySelector(".pdf-vue3-canvas-container canvas").offsetWidth;
-            const scroller = document.querySelector(".pdf-vue3-canvas-container");
+            const scroller = $(".pdf-vue3-canvas-container");
 
-            if (scroller.scrollLeft > 0) {
+            if (scroller.scrollLeft() > 0) {
                 this.prev++;
 
-                this.saveCurrentPage();
+                this.saveCurrentPage(this.getScroll());
             }
 
-            $("#scroller").animate({ scrollLeft: $("#scroller").scrollLeft() - canvaWidth }, 500).promise().then(() => {
+            scroller.stop().animate({ scrollLeft: self.getScroll() }, 500, () => {
                 self.paginating = false;
-            });
+            })
         },
         nextSlide: function () {
             let self = this;
@@ -59,24 +58,25 @@ export default {
 
             self.paginating = true;
             
-            const canvaWidth = document.querySelector(".pdf-vue3-canvas-container canvas").offsetWidth;
-            const scroller = document.querySelector(".pdf-vue3-canvas-container");
+            const scroller = $(".pdf-vue3-canvas-container");
             
-            if (scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth) {
+            if (scroller.scrollLeft() + scroller.outerWidth() < scroller[0].scrollWidth) {
                 this.next++;
 
-                this.saveCurrentPage();
+                this.saveCurrentPage(this.getScroll());
             }
 
-            $("#scroller").animate({ scrollLeft: $("#scroller").scrollLeft() + canvaWidth }, 500).promise().then(() => {
+            scroller.stop().animate({ scrollLeft: self.getScroll() }, 500, () => {
                 self.paginating = false;
-            });
+            })
         },
-        saveCurrentPage: function () {
+        getScroll: function () {
             let steps = this.next - this.prev;
-
             let scrollTarget = steps * (document.querySelector(".pdf-vue3-canvas-container canvas").offsetWidth);
 
+            return scrollTarget;
+        },
+        saveCurrentPage: function (scrollTarget) {
             localStorage.setItem("currentScroll", scrollTarget);
         }
     },
@@ -94,6 +94,10 @@ export default {
 }
 </script>
 <style>
+.pdf-vue3-main {
+    min-width: 80%;
+}
+
 .responsive-buttons {
     display: none;
     align-items: center;
