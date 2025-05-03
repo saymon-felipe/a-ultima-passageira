@@ -1,7 +1,7 @@
 <template>
     <footer class="contrast">
         <p class="phrase fontsize-md">
-            "A vida é feita de encontros e despedidas. Mas talvez, em algum lugar, a gente sempre se reencontre."
+            <reviewComponent />
         </p>
         <div class="author">
             <p class="fontsize-md">Autor: Saymon F.</p>
@@ -11,8 +11,13 @@
     </footer>
 </template>
 <script>
+import reviewComponent from "./reviewComponent.vue";
+
 export default {
-    name: "footerComponent"
+    name: "footerComponent",
+    components: {
+        reviewComponent
+    }
 }
 </script>
 <style scoped>

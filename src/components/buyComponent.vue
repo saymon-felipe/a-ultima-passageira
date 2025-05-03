@@ -16,7 +16,7 @@
                         Entre despedidas e reencontros, amor e redenção, esta é uma história sobre o tempo, os laços que nos definem e as estações que deixamos para trás.
                     </p>
                 </div>
-                <a href="" target="_blank" class="btn primary">Comprar</a>
+                <a href="https://clubedeautores.com.br/livro/a-ultima-passageira" target="_blank" class="btn primary">Comprar</a>
             </div>
         </div>
     </section>

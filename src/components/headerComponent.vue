@@ -26,6 +26,11 @@
                 Comprar
             </a>
         </li>
+        <li>
+            <a href="#resenha">
+                Resenha
+            </a>
+        </li>
         </ul>
     </header>
 </template>
@@ -55,7 +60,7 @@ header {
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
-        gap: var(--space-5);
+        gap: var(--space-8);
 
         & li {
             cursor: pointer;
